@@ -21,23 +21,24 @@ const EventForm = () => {
   const [yousei, setYousei] = useState(initialState.shindan);
   const [shindanCount, setShindanCount] = useState(initialState.shindan);
   const [showFlag, setShowFlag] = useState(initialState.show);
+  const [inseiFlg, setInseiFlg] = useState(initialState.show);
+  const [chuyouFlg, setChuyouFlg] = useState(initialState.show);
+  const [youseiFlg, setYouseiFlg] = useState(initialState.show);
 
   console.log('shindanCount', shindanCount);
 
   //console.log('prevCount', prevCount => prevCount);
   console.log('EventForm.sindan', insei, chuyou, yousei);
-
+ 
   const nextEvent = e => {
     e.preventDefault();
     setCount(prevCount => prevCount + 1);
-//    setShindanCount(initialState.shindan);
 
     dispatch({
       count,
       insei,
       chuyou,
       yousei
-//      shindanCount
     })
   }
   const returnEvent = e => {
@@ -46,7 +47,6 @@ const EventForm = () => {
     if(insei !== 0){setInsei(prevCount => prevCount - 1)};
     if(chuyou !== 0){setChuyou(prevCount => prevCount - 1)};
     if(yousei !== 0){setYousei(prevCount => prevCount - 1)};
-//    setShindanCount(initialState.shindan);
     setShowFlag(false);
 
     dispatch({
@@ -54,43 +54,50 @@ const EventForm = () => {
       insei,
       chuyou,
       yousei
-//      shindanCount
     })
   }
   const inseiEvent = e => {
     e.preventDefault();
     setInsei(prevCount => prevCount + 1);
     setShindanCount(prevCount => prevCount + 1);
-    console.log('inseiEvent.count', count);
-    console.log('inseiEvent.shindanCount', shindanCount);
 
     if (state.count === 16) {
       setShowFlag(true);
     }
-    // if (1 < shindanCount) {
-    //   if(insei !== 0){setInsei(prevCount => prevCount - 1)};
-    //   if(chuyou !== 0){setChuyou(prevCount => prevCount - 1)};
-    //   if(yousei !== 0){setYousei(prevCount => prevCount - 1)};
-    // }
+
+    if(chuyouFlg){
+      setChuyou(prevCount => prevCount - 1);
+      setChuyouFlg(false);
+    };
+
+    if(youseiFlg){
+      setYousei(prevCount => prevCount - 1);
+      setYouseiFlg(false);
+    };
+
+    setInseiFlg(true);
   }
 
   const chuyouEvent = e => {
     e.preventDefault();
     setChuyou(prevCount => prevCount + 1);
     setShindanCount(prevCount => prevCount + 1);
-    console.log('chuyouEvent.count', count);
-    console.log('chuyouEvent.shindanCount', shindanCount);
 
     if (count === 16) {
       setShowFlag(true);
     }
 
-    // if (1 < shindanCount) {
-    //   if(insei !== 0){setInsei(prevCount => prevCount - 1)};
-    //   if(chuyou !== 0){setChuyou(prevCount => prevCount - 1)};
-    //   if(yousei !== 0){setYousei(prevCount => prevCount - 1)};
-    // }
+    if(inseiFlg){
+      setInsei(prevCount => prevCount - 1);
+      setInseiFlg(false);
+    };
 
+    if(youseiFlg){
+      setYousei(prevCount => prevCount - 1);
+      setYouseiFlg(false);
+    };
+
+    setChuyouFlg(true);
   }
 
   const youseiEvent = e => {
@@ -103,11 +110,17 @@ const EventForm = () => {
     if (count === 16) {
       setShowFlag(true);
     }
-    // if (1 < shindanCount) {
-    //   if(insei !== 0){setInsei(prevCount => prevCount - 1)};
-    //   if(chuyou !== 0){setChuyou(prevCount => prevCount - 1)};
-    //   if(yousei !== 0){setYousei(prevCount => prevCount - 1)};
-    // }
+
+    if(inseiFlg){
+      setInsei(prevCount => prevCount - 1);
+      setInseiFlg(false);
+    };
+    if(chuyouFlg){setChuyou(
+      prevCount => prevCount - 1);
+      setChuyouFlg(false);
+    };
+  
+    setYouseiFlg(true);
   }
 
   return (
